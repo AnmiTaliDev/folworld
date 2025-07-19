@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOL World - Free and Open and Libre World</title>
+    <style>
+        :root {
+            --sf-gray-1: #8E8E93;
+            --sf-gray-2: #636366;
+            --sf-gray-3: #48484A;
+            --sf-gray-4: #3A3A3C;
+            --sf-gray-5: #2C2C2E;
+            --sf-gray-6: #1C1C1E;
+            --sf-blue: #007AFF;
+            --sf-green: #34C759;
+            --sf-orange: #FF9500;
+            --sf-red: #FF3B30;
+            --sf-background: #FFFFFF;
+            --sf-secondary-background: #F2F2F7;
+            --sf-tertiary-background: #FFFFFF;
+            --sf-label: #000000;
+            --sf-secondary-label: #3C3C43;
+            --sf-tertiary-label: #3C3C4399;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --sf-background: #000000;
+                --sf-secondary-background: #1C1C1E;
+                --sf-tertiary-background: #2C2C2E;
+                --sf-label: #FFFFFF;
+                --sf-secondary-label: #EBEBF5;
+                --sf-tertiary-label: #EBEBF599;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--sf-background);
+            color: var(--sf-label);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 60px 0 40px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--sf-gray-5);
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-size: 21px;
+            color: var(--sf-secondary-label);
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: var(--sf-tertiary-label);
+            font-weight: 400;
+        }
+
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 21px;
+            color: var(--sf-secondary-label);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .principles {
+            padding: 80px 0;
+            background-color: var(--sf-secondary-background);
+        }
+
+        .principles h2 {
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: -0.02em;
+        }
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .principle-card {
+            background: var(--sf-tertiary-background);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .principle-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .free { background-color: var(--sf-blue); }
+        .open { background-color: var(--sf-green); }
+        .libre { background-color: var(--sf-orange); }
+
+        .principle-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .principle-card p {
+            color: var(--sf-secondary-label);
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .licenses {
+            padding: 80px 0;
+        }
+
+        .licenses h2 {
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: -0.02em;
+        }
+
+        .license-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .license-card {
+            border: 1px solid var(--sf-gray-5);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .license-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .license-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .license-badge {
+            background-color: var(--sf-blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .license-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .license-card p {
+            color: var(--sf-secondary-label);
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        .license-features {
+            list-style: none;
+        }
+
+        .license-features li {
+            padding: 8px 0;
+            color: var(--sf-secondary-label);
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .license-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--sf-green);
+            font-weight: 600;
+        }
+
+        .cta {
+            padding: 80px 0;
+            background-color: var(--sf-secondary-background);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .cta p {
+            font-size: 21px;
+            color: var(--sf-secondary-label);
+            margin-bottom: 40px;
+        }
+
+        .github-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: var(--sf-tertiary-background);
+            border: 1px solid var(--sf-gray-5);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--sf-label);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background-color: var(--sf-blue);
+            color: white;
+            border-color: var(--sf-blue);
+        }
+
+        .github-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--sf-gray-5);
+        }
+
+        .footer-content {
+            color: var(--sf-tertiary-label);
+            font-size: 17px;
+        }
+
+        .footer-motto {
+            font-style: italic;
+            margin-top: 12px;
+            color: var(--sf-secondary-label);
+        }
+
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--sf-tertiary-background);
+            border: 1px solid var(--sf-gray-5);
+            border-radius: 20px;
+            padding: 8px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: none;
+            color: var(--sf-secondary-label);
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background-color: var(--sf-blue);
+            color: white;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 19px;
+            }
+
+            .principles h2,
+            .licenses h2,
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            .principle-grid,
+            .license-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .github-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+        <button class="lang-btn" onclick="switchLang('ru')">RU</button>
+    </div>
+
+    <div id="content-en" class="content active">
+        <header>
+            <div class="container">
+                <div class="logo">FOL World</div>
+                <div class="tagline">Free and Open and Libre World</div>
+                <div class="subtitle">Practical freedom for the digital age</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <h1>Freedom without fanatics</h1>
+                    <p>A new approach to software licensing that balances openness with practical commercial needs. Share freely, earn fairly, collaborate openly.</p>
+                </div>
+            </section>
+
+            <section class="principles">
+                <div class="container">
+                    <h2>Our Principles</h2>
+                    <div class="principle-grid">
+                        <div class="principle-card">
+                            <div class="principle-icon free">F</div>
+                            <h3>Free</h3>
+                            <p>Everyone has the right to use, study, and modify works without restrictions on purpose or method of application.</p>
+                        </div>
+                        <div class="principle-card">
+                            <div class="principle-icon open">O</div>
+                            <h3>Open</h3>
+                            <p>Source materials should be accessible for study, understanding, and improvement by the community.</p>
+                        </div>
+                        <div class="principle-card">
+                            <div class="principle-icon libre">L</div>
+                            <h3>Libre</h3>
+                            <p>Creators have the right to earn from their work through any honest means without judgment or ideological pressure.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="licenses">
+                <div class="container">
+                    <h2>FOLW Licenses</h2>
+                    <div class="license-grid">
+                        <div class="license-card">
+                            <div class="license-header">
+                                <div class="license-badge">v1.0</div>
+                                <h3>FOLW Code Licence</h3>
+                            </div>
+                            <p>For software, algorithms, and code. Combines the openness of GPL with commercial freedom of MIT.</p>
+                            <ul class="license-features">
+                                <li>Source code must remain accessible</li>
+                                <li>Commercial use explicitly permitted</li>
+                                <li>No additional permissions required</li>
+                                <li>Compatible with MIT, BSD, Apache 2.0</li>
+                                <li>Patent protection included</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="license-card">
+                            <div class="license-header">
+                                <div class="license-badge">Coming</div>
+                                <h3>FOLW Text Licence</h3>
+                            </div>
+                            <p>For documentation, books, research, and written content. Balances open access with author rights.</p>
+                            <ul class="license-features">
+                                <li>Open access to knowledge</li>
+                                <li>Commercial publishing allowed</li>
+                                <li>Attribution preserved</li>
+                                <li>Educational use encouraged</li>
+                                <li>Translation rights included</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="license-card">
+                            <div class="license-header">
+                                <div class="license-badge">Coming</div>
+                                <h3>FOLW Art Licence</h3>
+                            </div>
+                            <p>For creative works, music, video, and design. Supports artists while enabling cultural sharing.</p>
+                            <ul class="license-features">
+                                <li>Creative commons approach</li>
+                                <li>Commercial licensing options</li>
+                                <li>Creator attribution required</li>
+                                <li>Remix culture supported</li>
+                                <li>Platform-agnostic terms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <div class="container">
+                    <h2>Join the Movement</h2>
+                    <p>Help us build a more balanced approach to intellectual property in the digital age.</p>
+                    <div class="github-links">
+                        <a href="https://github.com/folworld" class="github-link">
+                            <span class="github-icon">⭐</span>
+                            FOL World
+                        </a>
+                        <a href="https://github.com/AnmiTaliDev" class="github-link">
+                            <span class="github-icon">👤</span>
+                            Creator
+                        </a>
+                        <a href="https://github.com/Qainar-Projects" class="github-link">
+                            <span class="github-icon">🏢</span>
+                            QCO
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    FOLW Movement - Free and Open and Libre World
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="content-ru" class="content">
+        <header>
+            <div class="container">
+                <div class="logo">FOL World</div>
+                <div class="tagline">Free and Open and Libre World</div>
+                <div class="subtitle">Практическая свобода для цифровой эпохи</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <h1>Свобода без фанатиков</h1>
+                    <p>Новый подход к лицензированию ПО, который балансирует открытость с практическими коммерческими потребностями. Делитесь свободно, зарабатывайте честно, сотрудничайте открыто.</p>
+                </div>
+            </section>
+
+            <section class="principles">
+                <div class="container">
+                    <h2>Наши принципы</h2>
+                    <div class="principle-grid">
+                        <div class="principle-card">
+                            <div class="principle-icon free">С</div>
+                            <h3>Свободное</h3>
+                            <p>Каждый имеет право использовать, изучать и изменять произведения без ограничений по целям и способам применения.</p>
+                        </div>
+                        <div class="principle-card">
+                            <div class="principle-icon open">О</div>
+                            <h3>Открытое</h3>
+                            <p>Исходные материалы должны быть доступны для изучения, понимания и улучшения сообществом.</p>
+                        </div>
+                        <div class="principle-card">
+                            <div class="principle-icon libre">Л</div>
+                            <h3>Либеральное</h3>
+                            <p>Создатели имеют право зарабатывать на своём труде любыми честными способами без осуждения или идеологического давления.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="licenses">
+                <div class="container">
+                    <h2>Лицензии FOLW</h2>
+                    <div class="license-grid">
+                        <div class="license-card">
+                            <div class="license-header">
+                                <div class="license-badge">v1.0</div>
+                                <h3>FOLW Code Licence</h3>
+                            </div>
+                            <p>Для программного обеспечения, алгоритмов и кода. Сочетает открытость GPL с коммерческой свободой MIT.</p>
+                            <ul class="license-features">
+                                <li>Исходный код должен оставаться доступным</li>
+                                <li>Коммерческое использование явно разрешено</li>
+                                <li>Дополнительные разрешения не требуются</li>
+                                <li>Совместима с MIT, BSD, Apache 2.0</li>
+                                <li>Включена патентная защита</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="license-card">
+                            <div class="license-header">
+                                <div class="license-badge">Скоро</div>
+                                <h3>FOLW Text Licence</h3>
+                            </div>
+                            <p>Для документации, книг, исследований и письменного контента. Балансирует открытый доступ с правами авторов.</p>
+                            <ul class="license-features">
+                                <li>Открытый доступ к знаниям</li>
+                                <li>Коммерческая публикация разрешена</li>
+                                <li>Атрибуция сохраняется</li>
+                                <li>Образовательное использование поощряется</li>
+                                <li>Права на перевод включены</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="license-card">
+                            <div class="license-header">
+                                <div class="license-badge">Скоро</div>
+                                <h3>FOLW Art Licence</h3>
+                            </div>
+                            <p>Для творческих работ, музыки, видео и дизайна. Поддерживает художников, обеспечивая культурный обмен.</p>
+                            <ul class="license-features">
+                                <li>Подход Creative Commons</li>
+                                <li>Опции коммерческого лицензирования</li>
+                                <li>Атрибуция создателя обязательна</li>
+                                <li>Поддержка ремикс-культуры</li>
+                                <li>Платформо-независимые условия</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <div class="container">
+                    <h2>Присоединяйтесь к движению</h2>
+                    <p>Помогите нам построить более сбалансированный подход к интеллектуальной собственности в цифровую эпоху.</p>
+                    <div class="github-links">
+                        <a href="https://github.com/folworld" class="github-link">
+                            <span class="github-icon">⭐</span>
+                            FOL World
+                        </a>
+                        <a href="https://github.com/AnmiTaliDev" class="github-link">
+                            <span class="github-icon">👤</span>
+                            Создатель
+                        </a>
+                        <a href="https://github.com/Qainar-Projects" class="github-link">
+                            <span class="github-icon">🏢</span>
+                            QCO
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    FOLW Movement - Free and Open and Libre World
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            // Hide all content
+            document.querySelectorAll('.content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show selected language content
+            document.getElementById('content-' + lang).classList.add('active');
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update page language attribute
+            document.documentElement.lang = lang;
+        }
+    </script>
+</body>
+</html>
